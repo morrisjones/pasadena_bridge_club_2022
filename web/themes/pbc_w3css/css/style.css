@@ -1,0 +1,187 @@
+/*
+ * SASS main code for Pasadena Bridge Club w3css version
+ */
+/*
+ * SASS main code for Pasadena Bridge Club w3css version
+ */
+body {
+  font-family: open-sans, sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: modesto-text, serif;
+  font-weight: 500;
+  color: #106632;
+  margin: 5px 0;
+}
+
+.w3-panel {
+  margin: 0;
+  padding: 0;
+}
+
+/* special blocks for the PBC front-page header */
+div.header-inner > div {
+  float: none;
+}
+
+.pbc-logo {
+  width: 100%;
+  padding: 8px;
+}
+
+.site-slogan {
+  text-transform: none;
+  font-size: 1.7em !important;
+  color: #106632;
+  padding-left: 8px;
+}
+
+#header {
+  background-color: white;
+}
+
+@media only screen and (min-width: 992px) {
+  div.pbc-header {
+    min-width: 400px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  div.pbc-header {
+    width: 50%;
+  }
+}
+div.callout-container {
+  float: right;
+}
+
+.top-callout {
+  text-align: center;
+  border: 3px solid #1e7ebe;
+  margin: 16px;
+  padding: 16px;
+  background-color: #cbf7dc;
+}
+
+/* end of special header blocks */
+/* Theme the page title for /node pages */
+#page-title {
+  background-color: inherit;
+}
+
+h1.page-title {
+  padding: 16px 0;
+}
+
+/* Manage the main navigation row */
+.main-navigation-wrapper, .close-nav, .mobile-nav {
+  background-color: #1e7ebe;
+}
+
+#main-navigation-h .ul-parent li > a {
+  padding: 5px 10px;
+}
+
+i.left-sidebar-nav {
+  line-height: 18px !important;
+}
+i.left-sidebar-nav:before {
+  content: "More";
+}
+
+i.left-sidebar-nav-displayed {
+  line-height: 18px !important;
+}
+i.left-sidebar-nav-displayed:before {
+  content: "Less";
+}
+
+/* Formatting for main content welcome block, front page only */
+div.field__item {
+  padding: 0;
+}
+
+#block-frontpagegreeting {
+  padding: 5px;
+  margin: 0;
+}
+#block-frontpagegreeting div {
+  padding: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+#block-frontpagegreeting div > p {
+  padding-left: 2em;
+}
+#block-frontpagegreeting div > figure {
+  width: 50%;
+  float: right;
+  margin-top: 0;
+  margin-right: 0;
+}
+#block-frontpagegreeting div > figure > img {
+  width: 100%;
+}
+#block-frontpagegreeting div > figure > figcaption {
+  font-size: 80%;
+  font-style: italic;
+}
+
+/* Formatting for the column of "plugs" aka the left-sidebar for the front page. */
+.main-container-inner .first-sidebar, .main-container-inner .w3css-content {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+div#left-sidebar > div.w3-sidebar-first {
+  padding: 12px 0 !important;
+}
+div#left-sidebar > div.w3-sidebar-first .plug-title {
+  margin: 0;
+}
+div#left-sidebar > div.w3-sidebar-first .plug-title:before {
+  content: "";
+  display: table;
+  clear: both;
+}
+div#left-sidebar > div.w3-sidebar-first .plug-body {
+  margin: 0;
+}
+div#left-sidebar > div.w3-sidebar-first .plug-body:before {
+  content: "";
+  display: table;
+  clear: both;
+}
+div#left-sidebar > div.w3-sidebar-first .plug-body p {
+  margin: 0;
+}
+div#left-sidebar article.plug-article {
+  background-color: #e1f0fa;
+  padding: 8px;
+  margin: 5px 0;
+  border: #1e7ebe solid 3px;
+}
+
+@media only screen and (max-width: 600px) {
+  #left-sidebar {
+    display: none;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .plug-container {
+    padding: 0 8px;
+  }
+}
+@media only screen and (min-width: 991px) {
+  .plug-container {
+    padding: 0;
+  }
+}
+/* Footer styles */
+#footer-menu {
+  background-color: #1e7ebe;
+}
+
+.copyright-inner, .ul-parent-account, .ul-parent-footer {
+  font-family: open-sans, sans-serif;
+}

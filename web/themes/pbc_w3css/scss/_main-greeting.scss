@@ -1,0 +1,34 @@
+@import "default-variables";
+
+/* Formatting for main content welcome block, front page only */
+
+div.field__item {
+  padding: 0;
+}
+
+#block-frontpagegreeting {
+  padding: 5px;
+  margin: 0;
+  div {
+    padding: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    > p {
+      padding-left: 2em;
+    }
+    > figure {
+      width: 50%;
+      float: right;
+      margin-top: 0;
+      margin-right: 0;
+      > img {
+        width: 100%;
+      }
+      > figcaption {
+        font-size: 80%;
+        font-style: italic;
+      }
+    }
+  }
+}
+

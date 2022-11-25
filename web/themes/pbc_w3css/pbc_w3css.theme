@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Add your custom theme override functions here.
+ */
+
+function pbc_w3css_preprocess_block(&$variables) {
+  $variables['is_front'] = Drupal::service('path.matcher')->isFrontPage();
+  $variables['#cache']['contexts'][] = 'url.path.is_front';
+}
+
+/* From
+ * https://drupal.stackexchange.com/questions/195665/how-to-remove-width-and-height-from-img-tag-in-drupal-8
+ * Remove width and height attributes from <img/> tag
+ */
+/*function pbc_w3css_preprocess_image(&$variables) {
+  if (isset($variables['attributes']['width']) && isset($variables['attributes']['height'])) {
+    unset($variables['attributes']['width']);
+    unset($variables['attributes']['height']);
+  }
+}*/

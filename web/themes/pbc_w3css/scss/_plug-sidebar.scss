@@ -1,0 +1,60 @@
+@import "default-variables";
+
+/* Formatting for the column of "plugs" aka the left-sidebar for the front page. */
+
+.main-container-inner {
+  .first-sidebar, .w3css-content {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+}
+
+div#left-sidebar {
+  > div.w3-sidebar-first {
+    padding: 12px 0 !important;
+    .plug-title {
+      &:before {
+        content: "";
+        display: table;
+        clear:both
+      }
+      margin: 0;
+    }
+    .plug-body {
+      &:before {
+        content: "";
+        display: table;
+        clear:both
+      }
+      margin: 0;
+      p {
+        margin: 0;
+      }
+    }
+  }
+  article.plug-article {
+    background-color: $brand-blue-light;
+    padding: 8px;
+    margin: 5px 0;
+    border: $brand-blue-dark solid 3px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #left-sidebar {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .plug-container {
+    padding: 0 8px;
+  }
+}
+
+@media only screen and (min-width: 991px){
+  .plug-container {
+    padding: 0;
+  }
+}
+

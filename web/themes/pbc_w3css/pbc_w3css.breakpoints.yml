@@ -1,0 +1,23 @@
+pbc.small:
+  label: pbc small
+  mediaQuery: '(min-width: 0px;)'
+  weight: 0
+  multipliers:
+    - 1x
+    - 2x
+
+pbc.medium:
+  label: pbc medium
+  mediaQuery: '(min-width: 600px;)'
+  weight: 1
+  multipliers:
+    - 1x
+    - 2x
+
+pbc.large:
+  label: pbc large
+  mediaQuery: '(min-width: 992px;)'
+  weight: 2
+  multipliers:
+    - 1x
+    - 2x

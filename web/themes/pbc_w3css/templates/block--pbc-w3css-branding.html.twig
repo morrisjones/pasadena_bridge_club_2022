@@ -1,0 +1,47 @@
+{#
+/**
+ * @file
+ * Theme override for a branding block.
+ *
+ * Each branding element variable (logo, name, slogan) is only available if
+ * enabled in the block configuration.
+ *
+ * Available variables:
+ * - site_logo: Logo for site as defined in Appearance or theme settings.
+ * - site_name: Name for site as defined in Site information settings.
+ * - site_slogan: Slogan for site as defined in Site information settings.
+ */
+#}
+  {% if is_front %}
+      <div class="w3-third w3-mobile pbc-header">
+        <div class="pbc-logo">
+          {% if site_logo %}
+            <div style="width: inherit;">
+              <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home" class="w3-left site-logo"
+                 style="width: inherit;">
+                <img src="{{ site_logo }}" alt="{{ 'Home'|t }}"/>
+              </a>
+            </div>
+          {% endif %}
+          {% if site_name %}
+            <h1 class="site-name w3-show-block">
+              <a class="w3-xlarge w3-padding" href="{{ path('<front>') }}" title="{{ 'Home'|t }}"
+                 rel="home">{{ site_name }}</a>
+            </h1>
+          {% endif %}
+          {% if site_slogan %}
+            <div>
+              <h3 class="site-slogan w3-large w3-show-block">{{ site_slogan }}</h3>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+  {% else %}
+    <div class="w3-left">
+      <div style="width: 100%;">
+        <a href="{{  path('<front>') }}" title="{{ 'Home'|t }}" rel="home" class="w3-left site-logo" style="width: inherit;">
+          <img src="/themes/pbc_w3css/pbc-logo-oneline.svg" style="width: 100vw; max-width: 300px; height: auto;" alt="{{  'Home'|t }}" />
+        </a>
+      </div>
+    </div>
+  {% endif %}

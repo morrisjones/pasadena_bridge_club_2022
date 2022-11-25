@@ -1,0 +1,52 @@
+/* special blocks for the PBC front-page header */
+
+@import "default-variables";
+
+div.header-inner {
+  > div {
+    float: none;
+  }
+}
+
+.pbc-logo {
+  width: 100%;
+  padding: 8px;
+}
+
+.site-slogan {
+  text-transform: none;
+  font-size: 1.7em !important;
+  color: $brand-green-dark;
+  padding-left: 8px;
+}
+
+#header {
+  background-color: white;
+}
+
+@media only screen and (min-width: 992px) {
+  div.pbc-header {
+    min-width: 400px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  div.pbc-header {
+    width: 50%;
+  }
+}
+
+div.callout-container {
+  float: right;
+}
+
+.top-callout {
+  text-align: center;
+  border: 3px solid $brand-blue-dark;
+  margin: 16px;
+  padding: 16px;
+  background-color: $brand-green-light;
+}
+
+
+/* end of special header blocks */

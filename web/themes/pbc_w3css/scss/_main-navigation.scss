@@ -1,0 +1,34 @@
+@import "default-variables";
+
+/* Manage the main navigation row */
+
+.main-navigation-wrapper, .close-nav, .mobile-nav {
+  background-color: $brand-blue-dark;
+}
+
+#main-navigation-h {
+  .ul-parent {
+    li {
+      > {
+        a {
+          padding: 5px 10px;
+        }
+      }
+    }
+  }
+}
+
+i.left-sidebar-nav {
+  line-height: 18px !important;
+  &:before {
+    content: "More";
+  }
+}
+
+i.left-sidebar-nav-displayed {
+  line-height: 18px !important;
+  &:before {
+    content: "Less";
+  }
+}
+
