@@ -180,8 +180,12 @@ div#left-sidebar article.plug-article {
 /* Footer styles */
 #footer-menu {
   background-color: #1e7ebe;
+  font-weight: bold;
+  color: white;
 }
 
 .copyright-inner, .ul-parent-account, .ul-parent-footer {
   font-family: open-sans, sans-serif;
 }
+
+/*# sourceMappingURL=style.css.map */
