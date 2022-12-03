@@ -58,9 +58,20 @@ div.callout-container {
 .top-callout {
   text-align: center;
   border: 3px solid #1e7ebe;
-  margin: 16px;
-  padding: 16px;
+  margin: 8px;
+  padding: 8px;
   background-color: #cbf7dc;
+}
+.top-callout div.w3-section {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.top-callout p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.top-callout h1 {
+  line-height: 1.1;
 }
 
 /* end of special header blocks */
