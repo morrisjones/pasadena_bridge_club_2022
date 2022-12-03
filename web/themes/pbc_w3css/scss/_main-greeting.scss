@@ -6,13 +6,20 @@ div.field__item {
   padding: 0;
 }
 
-#block-frontpagegreeting {
+#block-dailywelcome {
+  background-color: #f4f4f4;
+}
+
+#block-frontpagegreeting, #block-dailywelcome {
   padding: 5px;
   margin: 0;
   div {
     padding: 0;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    > ul {
+      padding-left: 4em;
+    }
     > p {
       padding-left: 2em;
     }
@@ -28,6 +35,22 @@ div.field__item {
         font-size: 80%;
         font-style: italic;
       }
+    }
+    a:link {
+      text-decoration: underline;
+      color: blue;
+    }
+    a:visited {
+      text-decoration: underline;
+      color: purple;
+    }
+    a:active {
+      text-decoration: underline;
+      color: red;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: darkgrey;
     }
   }
 }

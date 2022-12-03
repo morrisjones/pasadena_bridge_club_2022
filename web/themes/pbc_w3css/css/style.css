@@ -101,30 +101,62 @@ div.field__item {
   padding: 0;
 }
 
-#block-frontpagegreeting {
+#block-dailywelcome {
+  background-color: #f4f4f4;
+}
+
+#block-frontpagegreeting, #block-dailywelcome {
   padding: 5px;
   margin: 0;
 }
-#block-frontpagegreeting div {
+#block-frontpagegreeting div, #block-dailywelcome div {
   padding: 0;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
-#block-frontpagegreeting div > p {
+#block-frontpagegreeting div > ul, #block-dailywelcome div > ul {
+  padding-left: 4em;
+}
+#block-frontpagegreeting div > p, #block-dailywelcome div > p {
   padding-left: 2em;
 }
-#block-frontpagegreeting div > figure {
+#block-frontpagegreeting div > figure, #block-dailywelcome div > figure {
   width: 50%;
   float: right;
   margin-top: 0;
   margin-right: 0;
 }
-#block-frontpagegreeting div > figure > img {
+#block-frontpagegreeting div > figure > img, #block-dailywelcome div > figure > img {
   width: 100%;
 }
-#block-frontpagegreeting div > figure > figcaption {
+#block-frontpagegreeting div > figure > figcaption, #block-dailywelcome div > figure > figcaption {
   font-size: 80%;
   font-style: italic;
+}
+#block-frontpagegreeting div a:link, #block-dailywelcome div a:link {
+  text-decoration: underline;
+  color: blue;
+}
+#block-frontpagegreeting div a:visited, #block-dailywelcome div a:visited {
+  text-decoration: underline;
+  color: purple;
+}
+#block-frontpagegreeting div a:active, #block-dailywelcome div a:active {
+  text-decoration: underline;
+  color: red;
+}
+#block-frontpagegreeting div a:hover, #block-dailywelcome div a:hover {
+  text-decoration: underline;
+  color: darkgrey;
+}
+
+/* 
+ * Used for text blocks contained in contact forms and possibly other places
+ * I'm going to be sadly specific here until I can generalize
+ */
+#block-contactforminformation p {
+  margin-left: 16px;
+  padding-left: 16px;
 }
 
 /* Formatting for the column of "plugs" aka the left-sidebar for the front page. */

@@ -1,0 +1,11 @@
+/* 
+ * Used for text blocks contained in contact forms and possibly other places
+ * I'm going to be sadly specific here until I can generalize
+ */
+
+#block-contactforminformation {
+  p {
+    margin-left: 16px;
+    padding-left: 16px;
+  }
+}
