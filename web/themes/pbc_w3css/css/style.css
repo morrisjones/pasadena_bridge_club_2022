@@ -20,6 +20,58 @@ h1, h2, h3, h4, h5 {
   padding: 0;
 }
 
+/*
+ * Only used for the daily welcome block
+ */
+#block-dailywelcome {
+  width: auto;
+  padding: 8px;
+  margin: 8px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #106632;
+}
+#block-dailywelcome div {
+  padding: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+#block-dailywelcome div > ul {
+  padding-left: 4em;
+}
+#block-dailywelcome div > p {
+  padding-left: 2em;
+}
+#block-dailywelcome div > figure {
+  width: 50%;
+  float: right;
+  margin-top: 0;
+  margin-right: 0;
+}
+#block-dailywelcome div > figure > img {
+  width: 100%;
+}
+#block-dailywelcome div > figure > figcaption {
+  font-size: 80%;
+  font-style: italic;
+}
+#block-dailywelcome div a:link {
+  text-decoration: underline;
+  color: blue;
+}
+#block-dailywelcome div a:visited {
+  text-decoration: underline;
+  color: purple;
+}
+#block-dailywelcome div a:active {
+  text-decoration: underline;
+  color: red;
+}
+#block-dailywelcome div a:hover {
+  text-decoration: underline;
+  color: darkgrey;
+}
+
 /* special blocks for the PBC front-page header */
 div.header-inner > div {
   float: none;
@@ -116,47 +168,47 @@ div.field__item {
   background-color: #f4f4f4;
 }
 
-#block-frontpagegreeting, #block-dailywelcome {
+#block-frontpagegreeting {
   padding: 5px;
   margin: 0;
 }
-#block-frontpagegreeting div, #block-dailywelcome div {
+#block-frontpagegreeting div {
   padding: 0;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
-#block-frontpagegreeting div > ul, #block-dailywelcome div > ul {
+#block-frontpagegreeting div > ul {
   padding-left: 4em;
 }
-#block-frontpagegreeting div > p, #block-dailywelcome div > p {
+#block-frontpagegreeting div > p {
   padding-left: 2em;
 }
-#block-frontpagegreeting div > figure, #block-dailywelcome div > figure {
+#block-frontpagegreeting div > figure {
   width: 50%;
   float: right;
   margin-top: 0;
   margin-right: 0;
 }
-#block-frontpagegreeting div > figure > img, #block-dailywelcome div > figure > img {
+#block-frontpagegreeting div > figure > img {
   width: 100%;
 }
-#block-frontpagegreeting div > figure > figcaption, #block-dailywelcome div > figure > figcaption {
+#block-frontpagegreeting div > figure > figcaption {
   font-size: 80%;
   font-style: italic;
 }
-#block-frontpagegreeting div a:link, #block-dailywelcome div a:link {
+#block-frontpagegreeting div a:link {
   text-decoration: underline;
   color: blue;
 }
-#block-frontpagegreeting div a:visited, #block-dailywelcome div a:visited {
+#block-frontpagegreeting div a:visited {
   text-decoration: underline;
   color: purple;
 }
-#block-frontpagegreeting div a:active, #block-dailywelcome div a:active {
+#block-frontpagegreeting div a:active {
   text-decoration: underline;
   color: red;
 }
-#block-frontpagegreeting div a:hover, #block-dailywelcome div a:hover {
+#block-frontpagegreeting div a:hover {
   text-decoration: underline;
   color: darkgrey;
 }

@@ -1,18 +1,14 @@
-@import "default-variables";
-
-/* Formatting for main content welcome block, front page only */
-
-div.field__item {
-  padding: 0;
-}
+/*
+ * Only used for the daily welcome block
+ */
 
 #block-dailywelcome {
-  background-color: #f4f4f4;
-}
-
-#block-frontpagegreeting {
-  padding: 5px;
-  margin: 0;
+  width: auto;
+  padding: 8px;
+  margin: 8px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: $brand-green-dark;
   div {
     padding: 0;
     margin-top: 0 !important;
@@ -54,4 +50,3 @@ div.field__item {
     }
   }
 }
-
