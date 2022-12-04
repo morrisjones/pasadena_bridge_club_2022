@@ -20,6 +20,7 @@
         "drupal/core-project-message": "^9.4",
         "drupal/core-recommended": "^9.4",
         "drupal/d8w3css": "^2.0",
+        "drupal/google_analytics": "^4.0",
         "drupal/smtp": "^1.2",
         "drupal/typekit_integration": "^1.2",
         "drush/drush": "^11.3"
