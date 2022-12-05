@@ -326,8 +326,8 @@ div.available-courses-list li:last-child {
   padding: 8px;
 }
 
-span.views-field-field-number-of-sessions {
-  margin-right: 3em;
+span.views-field-field-recommended-for {
+  margin-left: 1em;
 }
 
 /*# sourceMappingURL=style.css.map */
