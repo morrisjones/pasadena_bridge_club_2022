@@ -313,7 +313,7 @@ li.available-courses-list-item {
   border-color: #106632;
   border-style: solid;
   border-width: 2px !important;
-  margin: 5px 0 5px 0;
+  margin: 8px 0 8px 0;
   padding: 8px;
   line-height: 1;
 }
@@ -322,7 +322,7 @@ div.available-courses-list li:last-child {
   border-color: #106632;
   border-style: solid;
   border-width: 2px !important;
-  margin: 5px 0 5px 0;
+  margin: 8px 0 8px 0;
   padding: 8px;
 }
 
