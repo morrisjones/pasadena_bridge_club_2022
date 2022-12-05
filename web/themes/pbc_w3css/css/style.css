@@ -283,4 +283,51 @@ div#left-sidebar article.plug-article {
   font-family: open-sans, sans-serif;
 }
 
+/* Theming for course blocks on /available_courses */
+.node--type-bridge-course {
+  margin-top: 5px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+.node--type-bridge-course div.field {
+  margin: 5px 0 0 0 !important;
+}
+.node--type-bridge-course div.field .field__label {
+  font-weight: bold;
+}
+.node--type-bridge-course div.field div.field__item p {
+  margin: 5px 0 0 1em !important;
+}
+.node--type-bridge-course div.field div.field__item li {
+  padding: 0;
+}
+.node--type-bridge-course div.field--name-field-special-notes .field__label {
+  font-style: italic;
+}
+.node--type-bridge-course div.field--name-field-course-number {
+  display: none;
+}
+
+li.available-courses-list-item {
+  border-color: #106632;
+  border-style: solid;
+  border-width: 2px !important;
+  margin: 5px 0 5px 0;
+  padding: 8px;
+  line-height: 1;
+}
+
+div.available-courses-list li:last-child {
+  border-color: #106632;
+  border-style: solid;
+  border-width: 2px !important;
+  margin: 5px 0 5px 0;
+  padding: 8px;
+}
+
+span.views-field-field-number-of-sessions {
+  margin-right: 3em;
+}
+
 /*# sourceMappingURL=style.css.map */

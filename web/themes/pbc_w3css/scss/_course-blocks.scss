@@ -1,0 +1,57 @@
+/* Theming for course blocks on /available_courses */
+
+.node--type-bridge-course {
+  margin-top: 5px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+
+  div.field {
+    margin: 5px 0 0 0 !important;
+    .field__label {
+      font-weight: bold;
+    }
+    div.field__item {
+      p {
+        margin: 5px 0 0 1em !important;
+      }
+      li {
+        padding: 0;
+      }
+    }
+  }
+
+  div.field--name-field-special-notes {
+    .field__label {
+      font-style: italic;
+    }
+  }
+
+  div.field--name-field-course-number {
+    display: none;
+  }
+
+}
+
+li.available-courses-list-item {
+  border-color: $brand-green-dark;
+  border-style: solid;
+  border-width: 2px !important;
+  margin: 5px 0 5px 0;
+  padding: 8px;
+  line-height: 1.0;
+}
+
+div.available-courses-list {
+  li:last-child {
+    border-color: $brand-green-dark;
+    border-style: solid;
+    border-width: 2px !important;
+    margin: 5px 0 5px 0;
+    padding: 8px;
+  }
+}
+
+span.views-field-field-number-of-sessions {
+  margin-right: 3em;
+}
