@@ -284,6 +284,23 @@ div#left-sidebar article.plug-article {
 }
 
 /* Theming for course blocks on /available_courses */
+section#block-classesintroduction a:link {
+  text-decoration: underline;
+  color: blue;
+}
+section#block-classesintroduction a:visited {
+  text-decoration: underline;
+  color: purple;
+}
+section#block-classesintroduction a:active {
+  text-decoration: underline;
+  color: red;
+}
+section#block-classesintroduction a:hover {
+  text-decoration: underline;
+  color: darkgrey;
+}
+
 .node--type-bridge-course {
   margin-top: 5px;
   margin-left: 0;
