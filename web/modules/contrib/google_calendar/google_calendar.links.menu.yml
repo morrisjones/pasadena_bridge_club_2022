@@ -1,0 +1,53 @@
+# Google Calendar menu items definitions
+
+google_calendar.admin_config_calendars:
+  title: Google Calendars
+  route_name: google_calendar.admin_config_calendars
+  parent: system.admin_config
+  description: 'Google Calendar import.'
+  weight: 0
+
+google_calendar.settings:
+  title: 'Calendar settings'
+  description: 'Calendar synchronisation setup and field configuration.'
+  route_name: google_calendar.settings
+  parent: google_calendar.admin_config_calendars
+
+google_calendar_event.settings:
+  title: 'Event settings'
+  description: 'Event synchronisation setup and field configuration.'
+  route_name: google_calendar_event.settings
+  parent: google_calendar.admin_config_calendars
+
+google_calendar.config_wizard:
+  title: 'Setup Wizard'
+  description: 'Google Calendar Setup Wizard'
+  route_name: google_calendar.config_wizard
+  parent: google_calendar.admin_config_calendars
+
+entity.google_calendar.import_calendars:
+  title: 'Import Calendars'
+  description: 'Import Shared Google Calendars'
+  route_name: google_calendar.import_calendars
+  parent: google_calendar.admin_config_calendars
+
+entity.google_calendar.collection:
+  title: 'Google Calendars'
+  route_name: entity.google_calendar.collection
+  description: 'List Google Calendars'
+  parent: system.admin_content
+  weight: 20
+
+entity.google_calendar_event.collection:
+  title: 'Google Calendar Events'
+  route_name: entity.google_calendar_event.collection
+  description: 'List Google Calendar Events'
+  parent: system.admin_content
+  weight: 21
+
+entity.google_calendar.sync_all_events:
+  title: 'Synchronize Calendar Events'
+  description: 'Synchronise Calendar Events'
+  route_name: google_calendar.sync_all_events
+  parent: system.admin_content
+  weight: 22

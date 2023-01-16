@@ -1,0 +1,33 @@
+{
+    "name": "drupal/google_secrets",
+    "description": "API module defining storage for Google_Client API secrets files.",
+    "type": "drupal-module",
+    "keywords": [
+        "Drupal",
+        "Google",
+        "Google_Client",
+        "API"
+    ],
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "homepage": "https://www.drupal.org/project/google_secrets",
+    "authors": [
+        {
+            "name": "Ruth Ivimey-Cook",
+            "homepage": "https://www.drupal.org/u/rivimey",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/google_secrets",
+        "source": "http://git.drupalcode.org/project/google_secrets"
+    },
+    "require": {
+        "php": "> 7.2",
+        "google/apiclient": "^2.0",
+        "drupal/core": "^8.8|^9.0|^10.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    }
+}

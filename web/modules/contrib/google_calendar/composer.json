@@ -1,0 +1,50 @@
+{
+    "name": "drupal/google_calendar",
+    "type": "drupal-module",
+    "description": "Provides an extensible integration with Google Calendar",
+    "keywords": [
+        "Drupal",
+        "Google",
+        "Calendar",
+        "API",
+        "Entity"
+    ],
+    "license": "GPL-2.0+",
+    "homepage": "https://www.drupal.org/project/google_calendar",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/google_calendar"
+    },
+    "require": {
+        "php": "> 7.1",
+        "drupal/google_secrets": "^1.0",
+        "google/apiclient": "^2.0@dev",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "Ruth Ivimey-Cook",
+            "homepage": "https://www.drupal.org/u/rivimey",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Drew Trafton",
+            "homepage": "https://www.drupal.org/u/dtraft",
+            "role": "Creator"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-8.x-1.x": "1.x-dev",
+            "dev-8.x-2.x": "2.x-dev"
+        },
+        "drush": {
+            "services": {
+                "drush.services.yml": "^9"
+            }
+        }
+    }
+}

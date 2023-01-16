@@ -1,0 +1,242 @@
+google_calendar.admin_config_calendars:
+  path: '/admin/config/google_calendar'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Google Calendars'
+  requirements:
+    _permission: 'access administration pages'
+
+
+# Calendar settings
+google_calendar.settings:
+  path: '/admin/config/google_calendar/calendars'
+  defaults:
+    _form: '\Drupal\google_calendar\Form\SettingsForm'
+    _title: 'Calendar settings'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE
+
+# Event settings
+google_calendar_event.settings:
+  path: '/admin/config/google_calendar/events'
+  defaults:
+    _form: '\Drupal\google_calendar\Form\EventSettingsForm'
+    _title: 'Event settings'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE
+
+# Import - i.e. Create local Calendar Entities from calendars created or shared by Google.
+google_calendar.import_calendars:
+  path: '/admin/config/google_calendar/calendars/import'
+  defaults:
+    _form: '\Drupal\google_calendar\Form\GoogleCalendarImportCalendarsForm'
+    _title: 'Import Calendars'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE
+
+# Import - i.e. Create a local Calendar Entity locally from data stored in Google.
+google_calendar.import_calendar:
+  path: '/admin/config/google_calendar/calendar/{calendar_id}/import'
+  defaults:
+    _controller: '\Drupal\google_calendar\Controller\GoogleCalendarImportCalendarController::importCalendar'
+    _title: 'Import Calendar'
+  requirements:
+    _permission: 'administer google calendars'
+    google_calendar: "[.a-z@_0-9]+"
+    _csrf_token: 'TRUE'
+  options:
+    _admin_route: TRUE
+
+# Sync - i.e. Update and create Events for all local Calendar Entities, from event data stored in Google.
+google_calendar.sync_all_events:
+  path: '/admin/content/google_calendar/events/sync'
+  defaults:
+    _controller: '\Drupal\google_calendar\Controller\GoogleCalendarImportEventsController::synchronizeCalendars'
+    _title: 'Synchronize all known calendars'
+  requirements:
+    _permission: 'manually sync calendar events'
+    _csrf_token: 'TRUE'
+  options:
+    _admin_route: TRUE
+
+# Sync - i.e. Update and create Events for one local Calendar Entity, from event data stored in Google.
+google_calendar.sync_events:
+  path: '/admin/content/google_calendar/events/{google_calendar}/sync/{resync}'
+  defaults:
+    _controller: '\Drupal\google_calendar\Controller\GoogleCalendarImportEventsController::synchronizeCalendar'
+    _title: 'Synchronize a specific calendar'
+    resync: '0'
+  requirements:
+    _permission: 'manually sync calendar events'
+    google_calendar: \d+
+    resync: \d
+    _csrf_token: 'TRUE'
+  options:
+    _admin_route: TRUE
+    parameters:
+      google_calendar:
+        type: entity:google_calendar
+      resync:
+        type: boolean
+
+# Add a calendar manually
+entity.google_calendar.add:
+  path: '/admin/content/google_calendar/add'
+  defaults:
+    _entity_form: 'google_calendar.add'
+    _title: 'Add a Google Calendar'
+  requirements:
+    _permission: 'administer google calendars'
+
+entity.google_calendar.collection:
+  path: '/admin/content/google_calendar'
+  defaults:
+    _entity_list: google_calendar
+    _title: 'List Google Calendars'
+  requirements:
+    _permission: 'view published google calendars'
+
+entity.google_calendar.canonical:
+  path: '/admin/content/google_calendar/{google_calendar}'
+  defaults:
+    _entity_form: 'google_calendar.edit'
+    _title: 'View a Google Calendar'
+  requirements:
+    _permission: 'administer google calendars'
+    google_calendar: '[0-9]+'
+  parameters:
+    google_calendar:
+      type: string
+
+entity.google_calendar.edit_form:
+  path: '/admin/content/google_calendar/{google_calendar}/edit'
+  defaults:
+    _entity_form: 'google_calendar.edit'
+    _title: 'Edit a Google Calendar'
+  requirements:
+    _permission: 'administer google calendars'
+    google_calendar: "[0-9]+"
+  parameters:
+    google_calendar:
+      type: string
+
+entity.google_calendar.delete_form:
+  path: '/admin/content/google_calendar/{google_calendar}/delete'
+  defaults:
+    _entity_form: 'google_calendar.delete'
+    _title: 'Delete a Google Calendar'
+  requirements:
+    _permission: 'administer google calendars'
+    google_calendar: "[0-9]+"
+  parameters:
+    google_calendar:
+      type: string
+
+entity.google_calendar_event.collection:
+  path: '/admin/content/google_calendar_event'
+  defaults:
+    _entity_list: google_calendar_event
+    _title: 'List Google Calendar Events'
+  requirements:
+    _permission: 'administer google calendars'
+
+entity.google_calendar_event.edit_form:
+  path: '/admin/content/calendar_event/{google_calendar_event}/edit'
+  defaults:
+    _entity_form: 'google_calendar_event.edit'
+    _title: 'Edit a Google Calendar Event'
+  requirements:
+    _permission: 'edit google calendar events'
+    google_calendar_event: "[0-9]+"
+  parameters:
+    google_calendar_event:
+      type: string
+
+entity.google_calendar_event.delete_form:
+  path: '/admin/content/calendar_event/{google_calendar_event}/delete'
+  defaults:
+    _entity_form: 'google_calendar_event.delete'
+    _title: 'Delete a Google Calendar Event'
+  requirements:
+    _permission: 'administer google calendars'
+    google_calendar_event: "[0-9]+"
+  parameters:
+    google_calendar_event:
+      type: string
+
+# Wizard to assist in configuring Google Calendars to work together with us.
+google_calendar.config_wizard:
+  path: '/admin/config/google_calendar/wizard/1'
+  defaults:
+    _form: '\Drupal\google_calendar\WizardForm\ConfigurationWizard_1'
+    _title: 'Introduction'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE
+
+google_calendar.config_wizard_two:
+  path: '/admin/config/google_calendar/wizard/2'
+  defaults:
+    _form: '\Drupal\google_calendar\WizardForm\ConfigurationWizard_2'
+    _title: 'Google Account'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE
+
+google_calendar.config_wizard_three:
+  path: '/admin/config/google_calendar/wizard/3'
+  defaults:
+    _form: '\Drupal\google_calendar\WizardForm\ConfigurationWizard_3'
+    _title: 'Google Calendar APIs'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE
+
+google_calendar.config_wizard_four:
+  path: '/admin/config/google_calendar/wizard/4'
+  defaults:
+    _form: '\Drupal\google_calendar\WizardForm\ConfigurationWizard_4'
+    _title: 'Create a Service Account'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE
+
+google_calendar.config_wizard_five:
+  path: '/admin/config/google_calendar/wizard/5'
+  defaults:
+    _form: '\Drupal\google_calendar\WizardForm\ConfigurationWizard_5'
+    _title: 'Share Calendars with Service Account'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE
+
+google_calendar.config_wizard_six:
+  path: '/admin/config/google_calendar/wizard/6'
+  defaults:
+    _form: '\Drupal\google_calendar\WizardForm\ConfigurationWizard_6'
+    _title: 'Import Calendars'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE
+
+google_calendar.config_wizard_seven:
+  path: '/admin/config/google_calendar/wizard/7'
+  defaults:
+    _form: '\Drupal\google_calendar\WizardForm\ConfigurationWizard_7'
+    _title: 'Credentials Summary'
+  requirements:
+    _permission: 'administer google calendars'
+  options:
+    _admin_route: TRUE

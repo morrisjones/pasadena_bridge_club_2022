@@ -1,0 +1,21 @@
+name: Google Calendar
+# version: '8.x-2.x-dev'
+# project: 'google_calendar'
+type: module
+description: Provides an extensible integration with Google Calendar
+dependencies:
+  - google_secrets:google_secrets
+  - drupal:link
+  - drupal:options
+  - drupal:text
+  - drupal:user
+  - drupal:views
+core_version_requirement: ^8 || ^9 || ^10
+package: Calendars
+configure: google_calendar.config_wizard
+
+
+# Information added by Drupal.org packaging script on 2022-11-24
+version: '8.x-2.5'
+project: 'google_calendar'
+datestamp: 1669315118

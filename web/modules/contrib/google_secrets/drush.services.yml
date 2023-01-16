@@ -1,0 +1,6 @@
+services:
+  google_secrets.command:
+    class: Drupal\google_secrets\Commands\GoogleSecretsCommands
+    arguments: ['@service_container']
+    tags:
+      -  { name: drush.command }

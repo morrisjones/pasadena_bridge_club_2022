@@ -1,0 +1,34 @@
+entity.google_calendar.add_form:
+  route_name: entity.google_calendar.add_form
+  title: 'Add Google Calendar'
+  appears_on:
+    - entity.google_calendar.collection
+
+entity.google_calendar.import_calendars:
+  title: 'Import Calendars'
+  description: 'Import Google Calendars'
+  route_name: google_calendar.import_calendars
+  appears_on:
+    - entity.google_calendar.collection
+
+entity.google_calendar.sync_all_calendars:
+  title: 'Synchronize All'
+  description: 'Synchronise all Google Calendars'
+  route_name: google_calendar.sync_all_events
+  appears_on:
+    - entity.google_calendar.collection
+
+entity.google_calendar.setup_wizard:
+  title: 'Setup Wizard'
+  description: 'Calendar Setup Wizard'
+  route_name: google_calendar.config_wizard
+  appears_on:
+    - entity.google_calendar.collection
+
+entity.google_calendar_event.list_calendars:
+  title: 'Calendars'
+  description: 'List of local Google Calendars'
+  route_name: entity.google_calendar.collection
+  appears_on:
+    - entity.google_calendar_event.collection
+

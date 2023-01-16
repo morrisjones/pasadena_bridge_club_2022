@@ -1,0 +1,292 @@
+<?php
+
+/**
+ * @file
+ * Contains google_calendar.module.
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Implements hook_install().
+ */
+function google_calendar_install() {
+  $queue = \Drupal::queue('google_calendar_refresh', TRUE);
+  $queue->createQueue();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function google_calendar_uninstall() {
+  \Drupal::state()->delete('google_calendar.cron_timestamp');
+
+  $queue = \Drupal::queue('google_calendar_refresh');
+  $queue->deleteQueue();
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function google_calendar_requirements($phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+
+    try {
+      $exists = \Drupal::moduleHandler()->moduleExists('google_secrets');
+    }
+    catch (\Exception $e) {
+      $exists = FALSE;
+    }
+
+    if (!$exists) {
+      $requirements['google_calendar_google_secrets_found'] = [
+        'title' => t('Google Secrets Module'),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => t('Missing'),
+        'description' => t('Google Calendar requires the Google Secrets module, but it is not enabled.'),
+      ];
+    }
+    else {
+      try {
+        $service = \Drupal::service('google_calendar.google_client.calendar');
+      }
+      catch (\Exception $e) {
+        $service = NULL;
+      }
+
+      if ($service) {
+        $req = [
+          'severity' => REQUIREMENT_INFO,
+          'value' => t('Enabled'),
+          'description' => t('A valid account is configured for Google Calendar.'),
+        ];
+      }
+      else {
+        $req = [
+          'severity' => REQUIREMENT_WARNING,
+          'value' => t('Not configured'),
+          'description' => t('Google Calendar is not configured with a valid account.'),
+        ];
+      }
+      $requirements['google_calendar_configured'] = $req;
+      $requirements['google_calendar_configured']['title'] = t('Google Calendar Accounts');
+    }
+
+    $requirements['google_calendar_entities'] = [
+      'title' => t('Google Calendar Entities'),
+      'severity' => REQUIREMENT_INFO,
+    ];
+
+    $gc_count = 0;
+    $ge_count = 0;
+    $etm = \Drupal::entityTypeManager();
+
+    // Check calendars carefully in case there is a config error.
+    try {
+      $gc_storage = $etm->getStorage('google_calendar');
+      $query = $gc_storage->getQuery()->count();
+      $gc_count = $query->execute();
+    }
+    catch (\Exception $e) {
+      $requirements['google_calendar_except'] = [
+        'title' => t('Exception thrown checking calendar entities'),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => t('@c: @e', [
+          '@c' => get_class($e),
+          '@e' => $e->getMessage(),
+        ]),
+        'description' => $e->getTraceAsString(),
+      ];
+    }
+
+    // Check calendar events carefully in case there is a config error.
+    try {
+      $ge_storage = $etm->getStorage('google_calendar_event');
+      $query = $ge_storage->getQuery()->count();
+      $ge_count = $query->execute();
+    }
+    catch (\Exception $e) {
+      $requirements['google_calendar_event_except'] = [
+        'title' => t('Exception thrown checking calendar entities'),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => t('@c: @e', [
+          '@c' => get_class($e),
+          '@e' => $e->getMessage(),
+        ]),
+        'description' => $e->getTraceAsString(),
+      ];
+    }
+
+    // We are not checking that all events belong to a calendar... should we?
+    if ($gc_count > 0) {
+      $requirements['google_calendar_entities']['value'] = t('Calendars present');
+      $requirements['google_calendar_entities']['description'] =
+        t('There are @gc_count Calendars and @ge_count Events loaded.',
+          ['@gc_count' => $gc_count, '@ge_count' => $ge_count]);
+    }
+    elseif ($ge_count > 0) {
+      $requirements['google_calendar_entities']['severity'] = REQUIREMENT_ERROR;
+      $requirements['google_calendar_entities']['value'] = t('Calendars absent but Events present');
+      $requirements['google_calendar_entities']['description'] =
+        t('There are no Calendars, but @ge_count orphaned Events are loaded.',
+          ['@ge_count' => $ge_count]);
+    }
+    else {
+      $requirements['google_calendar_entities']['value'] = t('Calendars absent');
+      $requirements['google_calendar_entities']['description'] = t('There are no imported Calendars or Events.');
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Add sync_token field.
+ */
+function google_calendar_update_8001() {
+  $storage_definition = BaseFieldDefinition::create('string')
+    ->setLabel(t('Sync Token'))
+    ->setDescription(t('Token used for incremental sync.'))
+    ->setDefaultValue(NULL)
+    ->setInternal(TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('sync_token', 'google_calendar', 'google_calendar', $storage_definition);
+}
+
+/**
+ * Rename config to settings.
+ */
+function google_calendar_update_8002() {
+  $configFactory = \Drupal::configFactory();
+  $defaultsConfig = $configFactory->getEditable('google_calendar.defaults');
+  $settingsConfig = $configFactory->getEditable('google_calendar.settings');
+  $keys = [
+    'cleanup_policy',
+    'horizon_refresh',
+    'entity_ownership',
+    'default_event_owner',
+    'cron_frequency',
+    'client_secret_type',
+    'client_secret_config',
+  ];
+  foreach ($keys as $key) {
+    $settingsConfig->set($key, $defaultsConfig->get($key));
+  }
+  $settingsConfig->save();
+  $defaultsConfig->delete();
+}
+
+/**
+ * Rebuild queue as a reliable queue.
+ */
+function google_calendar_update_8003() {
+  // Delete old queue if possible, otherwise don't care.
+  try {
+    $queue = \Drupal::queue('google_calendar');
+    $queue->deleteQueue();
+  }
+  catch (\Exception $e) {
+  }
+
+  // New Queue definition.
+  $queue = \Drupal::queue('google_calendar_refresh', TRUE);
+  $queue->createQueue();
+}
+
+/**
+ * Add event recurrence fields.
+ */
+function google_calendar_update_8004() {
+  // Recurrence fields: ID.
+  $storage_definition = BaseFieldDefinition::create('string')
+    ->setLabel(t('Recurrence ID'))
+    ->setDescription(t('Recurrence event id'))
+    ->setReadOnly(TRUE)
+    ->setDefaultValue('');
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('recurrence_id',
+                                    'google_calendar_event',
+                                    'google_calendar',
+                                    $storage_definition);
+
+  // Recurrence fields: Settings.
+  $storage_definition = BaseFieldDefinition::create('string')
+    ->setLabel(t('Recurrence'))
+    ->setDescription(t('Recurrence info'))
+    ->setReadOnly(TRUE)
+    ->setDefaultValue('');
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('recurrence',
+                                    'google_calendar_event',
+                                    'google_calendar',
+                                    $storage_definition);
+}
+
+/**
+ * Re-import events view - WARNING: Custom modifications will be lost.
+ */
+function google_calendar_update_8005() {
+  // Get current config
+  $value = \Drupal::service('google_calendar.extension_storage')->read('views.view.google_calendar_events');
+
+  $entity_manager = \Drupal::service('entity_type.manager');
+
+  // @see Drupal\config_update\ConfigReverter::revert()
+  // From Config Update Manager module
+  $definition = $entity_manager->getDefinition('view');
+  $id_key = $definition->getKey('id');
+  $id = $value[$id_key];
+  $entity_storage = $entity_manager->getStorage('view');
+  $entity = $entity_storage->load($id);
+  $core = $entity->get('_core');
+  $entity = $entity_storage->updateFromStorageRecord($entity, $value);
+  $entity->set('_core', $core);
+  $entity->save();
+}
+
+/**
+ * Add 'created' field storage definition to google event entities.
+ */
+function google_calendar_update_8006() {
+  $field_storage_definition = BaseFieldDefinition::create('changed')
+    ->setLabel(t('Changed'))
+    ->setDescription(t('The time that the entity was last edited.'));
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('changed', 'google_calendar_event', 'google_calendar', $field_storage_definition);
+}
+
+/**
+ * Add default value to timestamp & string fields.
+ */
+function google_calendar_update_8007() {
+  $calendar_spec = [
+    'last_checked' => 0,
+    'latest_event' => 0,
+  ];
+  $event_spec = [
+    'event_id' => '',
+    'ical_id' => '',
+    'start_date' => 0,
+    'end_date' => 0,
+    'created' => 0,
+    'updated' => 0,
+    'creator' => '',
+    'organizer_email' => '',
+  ];
+  $schema = Database::getConnection()->schema();
+  foreach ($calendar_spec as $k => $v) {
+    // Deprecated in 9; but we'll get this done in 8 yet!
+    $schema->fieldSetDefault('google_calendar', $k, $v);
+  }
+  foreach ($event_spec as $k => $v) {
+    // Deprecated in 9; but we'll get this done in 8 yet!
+    $schema->fieldSetDefault('google_calendar_event', $k, $v);
+  }
+}

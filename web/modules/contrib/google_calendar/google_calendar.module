@@ -1,0 +1,227 @@
+<?php
+
+/**
+ * @file
+ * Contains google_calendar.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_help().
+ */
+function google_calendar_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+
+    case 'help.page.google_calendar':
+      // Main module help for the google_calendar module.
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides an extensible integration with Google Calendar.') . '</p>';
+      return $output;
+
+    case 'google_calendar.import_calendars':
+      $output = '';
+      $output .= '<p>' . t('Shows all calendars visible in the Google API, and those stored as Calendar entities locally. The Status column indicates:') . '</p>';
+      $output .= '<ul>';
+      $output .= '<li><b>' . t('Unpublished as NAME:') . '</b> ' . t('There is an imported calendar that is not published and therefore not updated. Publish it to show and/or update it.') . '</li>';
+      $output .= '<li><b>' . t('Imported as NAME:') . '</b> ' . t('There is an imported calendar that is visible and available for update.') . '</li>';
+      $output .= '<li><b>' . t('Not imported:') . '</b> ' . t('The calendar can be imported now.') . '</li>';
+      $output .= '<li><b>' . t('No longer available:') . '</b> ' . t('The Drupal calendar exists but it is no longer visible in the Google Calendar API and is therefore not being updated. Is it still being shared from the host Google Account?') . '</li>';
+      $output .= '</ul>';
+      $output .= '<p>' . t('Use the Operations links to change the status.') . '</p>';
+      return $output;
+
+    case 'entity.google_calendar.collection':
+      $output = '';
+      $output .= '<p>' . t('There are two types of synchronizations:') . '</p>';
+      $output .= '<ul>';
+      $output .= '<li><b>' . t('Synchronize:') . '</b> ' .
+        t(
+          'Performs an <a href=":incremental" target="_blank">incremental sync</a>, based on the time window of the last full refresh as configured on the <a href=":settings">calendar\'s settings</a>.',
+          [
+            ':incremental' => 'https://developers.google.com/calendar/v3/sync#incremental_sync',
+            ':settings' => Url::fromRoute('google_calendar_event.settings', [], ['fragment' => 'edit-refresh'])->toString(),
+          ]
+        ) . '</li>';
+      $output .= '<li><b>' . t('Synchronize (Full):') . '</b> ' .
+        t(
+          'Performs a new <a href=":full" target="_blank">full sync</a>, based on the updated time window configured on the <a href=":settings">calendar\'s settings</a>.',
+          [
+            ':full' => 'https://developers.google.com/calendar/v3/sync#full_sync_required_by_server',
+            ':settings' => Url::fromRoute('google_calendar_event.settings', [], ['fragment' => 'edit-refresh'])->toString(),
+          ]
+        ) . '</li>';
+      $output .= '</ul>';
+      return $output;
+  }
+}
+
+/**
+ * Cron: Queues calendars for import.
+ *
+ * @param bool $bypass
+ *   When true, bypass the frequency check.
+ *
+ * @return bool
+ *   True if calendars considered for update; false if bypassed.
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function google_calendar_cron($bypass = FALSE) {
+
+  $disabled = \Drupal::config('google_calendar.settings')->get('cron_disabled');
+  if ($disabled) {
+    return;
+  }
+
+  $request_time = \Drupal::time()->getRequestTime();
+  $state = \Drupal::state();
+  $queue = \Drupal::queue('google_calendar_import_processor', TRUE);
+  $logger = \Drupal::logger('google_calendar');
+
+  $last = $state->get('google_calendar.cron_timestamp', 0);
+
+  if (!$bypass) {
+    $frequency = \Drupal::config('google_calendar.settings')->get('cron_frequency');
+    // Impose 1 min (60 sec) minimum interval.
+    $frequency = !empty($frequency) && ($frequency > 60) ? $frequency : 60;
+
+    // Execute only if it has been longer than cron interval since last run.
+    $diff = ($last + $frequency) - $request_time;
+    if ($diff >= 0) {
+      $logger->notice(t('Update check bypassed - too soon, wait @i secs.', ['@i' => $diff]));
+      return FALSE;
+    }
+  }
+
+  $state->set('google_calendar.cron_timestamp', $request_time);
+
+  // Fetch published calendars..
+  $foundCalendars = \Drupal::entityTypeManager()
+    ->getStorage('google_calendar')
+    ->loadByProperties(['status' => 1]);
+
+  /** @var \Drupal\google_calendar\Entity\GoogleCalendar $calendar */
+  foreach ($foundCalendars as $calendar) {
+    $queue->createItem($calendar->id());
+  }
+  return TRUE;
+}
+
+/**
+ * Implements hook_entity_operation_alter().
+ *
+ * Adds the import action to the operations links.
+ */
+function google_calendar_entity_operation_alter(&$operations, EntityInterface $entity) {
+  $info = $entity->getEntityType();
+
+  switch ($info->id()) {
+    case 'google_calendar':
+      $operations['events'] = [
+        'title' => t('Events'),
+        'weight' => 14,
+        'url' => Url::fromRoute('view.google_calendar_events.events', [
+          'google_calendar' => $entity->id(),
+        ]),
+      ];
+      $operations['import'] = [
+        'title' => t('Synchronize'),
+        'weight' => 15,
+        'url' => Url::fromRoute("google_calendar.sync_events", [
+          'google_calendar' => $entity->id(),
+          'resync' => '0',
+        ]),
+      ];
+      $operations['import_full'] = [
+        'title' => t('Synchronize (Full)'),
+        'weight' => 16,
+        'url' => Url::fromRoute("google_calendar.sync_events", [
+          'google_calendar' => $entity->id(),
+          'resync' => '1',
+        ]),
+      ];
+  }
+  return $operations;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Makes the fields imported from google calendar read only.
+ */
+function google_calendar_form_google_calendar_event_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $read_only = [
+    'name',
+    'location',
+    'calendar',
+    'description',
+    'start_date',
+    'end_date',
+  ];
+
+  // These fields should be read-only.
+  foreach ($read_only as $field) {
+    $form[$field]['widget'][0]['value']['#attributes']['readonly'] = 'readonly';
+  }
+  // Extra for description field.
+  $form['description']['widget'][0]['#attributes']['readonly'] = 'readonly';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Makes the fields imported from google calendar read only.
+ */
+function google_calendar_form_google_calendar_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $read_only = [
+    'sync_token',
+    'sync_result',
+    'latest_event',
+    'last_checked',
+  ];
+
+  // These fields should be read-only.
+  foreach ($read_only as $field) {
+    $form[$field]['widget'][0]['value']['#attributes']['readonly'] = 'readonly';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Improves events exposed filter with a select made of google calendar
+ * entities.
+ */
+function google_calendar_form_views_exposed_form_alter(array &$form,
+                                                       FormStateInterface $form_state, $form_id) {
+
+  if ($form['#id'] === 'views-exposed-form-google-calendar-events-events') {
+
+    if (!empty($form['google_calendar'])) {
+      $calendars = \Drupal::entityTypeManager()
+        ->getListBuilder('google_calendar')
+        ->getStorage()
+        ->loadByProperties(['status' => 1]);
+
+      $options = [];
+      foreach ($calendars as $calendar) {
+        $options[$calendar->id()] = $calendar->label();
+      }
+      asort($options);
+      $options = ['' => t('- Any -')] + $options;
+
+      $element = &$form['google_calendar'];
+      $element['#type'] = 'select';
+      $element['#options'] = $options;
+      unset($element['#size']);
+    }
+  }
+}

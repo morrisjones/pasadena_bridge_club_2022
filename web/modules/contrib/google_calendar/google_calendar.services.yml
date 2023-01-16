@@ -1,0 +1,31 @@
+services:
+  google_calendar.google_client.factory:
+    class: Drupal\google_calendar\GoogleCalendarClientFactory
+    arguments: ['@config.factory', '@google_secrets.google_client.factory', '@logger.factory']
+
+  google_calendar.google_client.calendar:
+    class: Google_Service_Calendar
+    factory: ['@google_calendar.google_client.factory', getCalendarClient]
+
+  google_calendar.google_client.client:
+    class: Drupal\google_calendar\GoogleCalendarClientFactory::getClient
+    factory: ['@google_calendar.google_client.factory', getClient]
+
+  google_calendar.google_client.store:
+    class: Drupal\google_calendar\GoogleCalendarClientFactory::getStore
+    factory: ['@google_calendar.google_client.factory', getStore]
+
+  google_calendar.import_calendar:
+    class: Drupal\google_calendar\GoogleCalendarImportCalendar
+    arguments: ['@google_calendar.google_client.calendar', '@config.factory', '@entity_type.manager', '@logger.factory']
+
+  google_calendar.sync_events:
+    class: Drupal\google_calendar\GoogleCalendarImportEvents
+    arguments: ['@google_calendar.google_client.calendar', '@config.factory', '@entity_type.manager', '@logger.factory', '@event_dispatcher']
+
+  # To be used temporarilly by alpha update hooks if we need to reset configs.
+  # @see config_update module
+  google_calendar.extension_storage:
+    class: Drupal\Core\Config\ExtensionInstallStorage
+    arguments: ['@config.storage', 'config/install', '', true, '%install_profile%']
+
