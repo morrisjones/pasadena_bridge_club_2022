@@ -1,0 +1,36 @@
+/* Used for full page display of staff members, I think
+ */
+
+article.node--type-staff-member {
+  div.field--name-field-picture {
+    display: inline;
+    float: left;
+    max-width: 25%;
+  }
+  a:link {
+    text-decoration: underline;
+    color: blue;
+  }
+  a:visited {
+    text-decoration: underline;
+    color: purple;
+  }
+  a:active {
+    text-decoration: underline;
+    color: red;
+  }
+  a:hover {
+    text-decoration: underline;
+    color: darkgrey;
+  }
+}
+
+/* Here for the staff listing page */
+
+div.view-staff {
+  div.views-field-field-picture {
+    float: left;
+    max-width: 25%;
+    margin-right: 1em;
+  }
+}

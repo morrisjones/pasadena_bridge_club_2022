@@ -357,4 +357,42 @@ span.views-field-field-recommended-for {
   margin-left: 1em;
 }
 
+div.views-field-field-full-course-fee {
+  margin-top: 8px;
+}
+div.views-field-field-full-course-fee div.field-content {
+  display: inline;
+}
+
+/* Used for full page display of staff members, I think
+ */
+article.node--type-staff-member div.field--name-field-picture {
+  display: inline;
+  float: left;
+  max-width: 25%;
+}
+article.node--type-staff-member a:link {
+  text-decoration: underline;
+  color: blue;
+}
+article.node--type-staff-member a:visited {
+  text-decoration: underline;
+  color: purple;
+}
+article.node--type-staff-member a:active {
+  text-decoration: underline;
+  color: red;
+}
+article.node--type-staff-member a:hover {
+  text-decoration: underline;
+  color: darkgrey;
+}
+
+/* Here for the staff listing page */
+div.view-staff div.views-field-field-picture {
+  float: left;
+  max-width: 25%;
+  margin-right: 1em;
+}
+
 /*# sourceMappingURL=style.css.map */

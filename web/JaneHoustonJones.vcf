@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSIN:4.0
+N:Jones;Jane;Houston
+FN:Jane Houston Jones
+ORG:Pasadena Bridge Club
+TITLE:Founder
+TEL;WORK;VOICE:(626) 247-4457
+TEL;HOME;VOICE:(626) 755-5438
+ADR;WORK:;Pasadena Bridge Club;649 N Fair Oaks Ave #201;Pasadena;CA;91103;USA
+URL;WORK:https://pasadenabridgeclub.com
+URL;HOME:https://jane.whiteoaks.com
+EMAIL:jane@pasadenabridgeclub.com
+END:VCARD

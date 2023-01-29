@@ -1,0 +1,15 @@
+BEGIN:VCARD
+VERSIN:4.0
+N:Jones;Morris
+NICKNAME:Mojo
+FN:Morris "Mojo" Jones
+ORG:Pasadena Bridge Club
+TITLE:Managing Director
+TEL;WORK;VOICE:(626) 247-4457
+TEL;HOME;VOICE:(626) 755-5415
+ADR;WORK:;Pasadena Bridge Club;649 N Fair Oaks Ave #201;Pasadena;CA;91103;USA
+URL;WORK:https://pasadenabridgeclub.com
+URL;HOME:https://bridgemojo.com
+EMAIL:mojo@pasadenabridgeclub.com
+PHOTO;JPEG:https://bridgemojo.com/sites/bridgemojo.com/images/mojo-2017-thumb.jpg
+END:VCARD
