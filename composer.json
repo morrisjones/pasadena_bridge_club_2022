@@ -24,6 +24,7 @@
         "drupal/google_analytics": "^4.0",
         "drupal/google_calendar": "^2.5",
         "drupal/honeypot": "^2.1",
+        "drupal/protected_pages": "^1.6",
         "drupal/smtp": "^1.2",
         "drupal/typekit_integration": "^1.2",
         "drush/drush": "^11.3"
