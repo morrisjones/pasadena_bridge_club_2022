@@ -28,6 +28,19 @@ h1, h2, h3, h4, h5 {
   padding: 2px;
 }
 
+.node__content a,
+.node__content a:link,
+.node__content a:visited,
+.node__content a:active,
+.node__content a:hover,
+.available-courses-list-item a,
+.available-courses-list-item a:link,
+.available-courses-list-item a:visited,
+.available-courses-list-item a:active,
+.available-courses-list-item a:hover {
+  text-decoration: underline;
+}
+
 /*
  * Only used for the daily welcome block
  */
@@ -73,21 +86,12 @@ h1, h2, h3, h4, h5 {
   padding-top: 0;
   padding-bottom: 0;
 }
-#block-dailywelcome div a:link {
-  text-decoration: underline;
-  color: blue;
-}
-#block-dailywelcome div a:visited {
-  text-decoration: underline;
-  color: purple;
-}
-#block-dailywelcome div a:active {
-  text-decoration: underline;
-  color: red;
-}
+#block-dailywelcome div a,
+#block-dailywelcome div a:link,
+#block-dailywelcome div a:visited,
+#block-dailywelcome div a:active,
 #block-dailywelcome div a:hover {
   text-decoration: underline;
-  color: darkgrey;
 }
 
 /* special blocks for the PBC front-page header */
@@ -214,21 +218,12 @@ div.field__item {
   font-size: 80%;
   font-style: italic;
 }
-#block-frontpagegreeting div a:link {
-  text-decoration: underline;
-  color: blue;
-}
-#block-frontpagegreeting div a:visited {
-  text-decoration: underline;
-  color: purple;
-}
-#block-frontpagegreeting div a:active {
-  text-decoration: underline;
-  color: red;
-}
+#block-frontpagegreeting div a,
+#block-frontpagegreeting div a:link,
+#block-frontpagegreeting div a:visited,
+#block-frontpagegreeting div a:active,
 #block-frontpagegreeting div a:hover {
   text-decoration: underline;
-  color: darkgrey;
 }
 
 /* 
@@ -302,21 +297,11 @@ div#left-sidebar article.plug-article {
 }
 
 /* Theming for course blocks on /available_courses */
-section#block-classesintroduction a:link {
-  text-decoration: underline;
-  color: blue;
-}
-section#block-classesintroduction a:visited {
-  text-decoration: underline;
-  color: purple;
-}
-section#block-classesintroduction a:active {
-  text-decoration: underline;
-  color: red;
-}
+section#block-classesintroduction a:link,
+section#block-classesintroduction a:visited,
+section#block-classesintroduction a:active,
 section#block-classesintroduction a:hover {
   text-decoration: underline;
-  color: darkgrey;
 }
 
 .node--type-bridge-course {
@@ -379,21 +364,12 @@ article.node--type-staff-member div.field--name-field-picture {
   float: left;
   max-width: 25%;
 }
-article.node--type-staff-member a:link {
-  text-decoration: underline;
-  color: blue;
-}
-article.node--type-staff-member a:visited {
-  text-decoration: underline;
-  color: purple;
-}
-article.node--type-staff-member a:active {
-  text-decoration: underline;
-  color: red;
-}
+article.node--type-staff-member a,
+article.node--type-staff-member a:link,
+article.node--type-staff-member a:visited,
+article.node--type-staff-member a:active,
 article.node--type-staff-member a:hover {
   text-decoration: underline;
-  color: darkgrey;
 }
 
 /* Here for the staff listing page */

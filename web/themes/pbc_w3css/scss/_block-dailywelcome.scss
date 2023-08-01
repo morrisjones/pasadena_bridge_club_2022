@@ -42,21 +42,12 @@
       padding-top: 0;
       padding-bottom: 0;
     }
-    a:link {
-      text-decoration: underline;
-      color: blue;
-    }
-    a:visited {
-      text-decoration: underline;
-      color: purple;
-    }
-    a:active {
-      text-decoration: underline;
-      color: red;
-    }
+    a,
+    a:link,
+    a:visited,
+    a:active,
     a:hover {
       text-decoration: underline;
-      color: darkgrey;
     }
   }
 }
