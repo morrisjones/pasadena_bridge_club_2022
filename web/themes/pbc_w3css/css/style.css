@@ -20,6 +20,14 @@ h1, h2, h3, h4, h5 {
   padding: 0;
 }
 
+.course-table {
+  max-width: 600px;
+  border-collapse: collapse;
+}
+.course-table td, .course-table th {
+  padding: 2px;
+}
+
 /*
  * Only used for the daily welcome block
  */
