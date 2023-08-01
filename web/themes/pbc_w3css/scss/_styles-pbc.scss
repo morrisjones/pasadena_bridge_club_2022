@@ -20,3 +20,13 @@ h1, h2, h3, h4, h5 {
   padding: 0;
 }
 
+.node__content,
+.available-courses-list-item {
+  a,
+  a:link,
+  a:visited,
+  a:active,
+  a:hover {
+    text-decoration: underline;
+  }
+}

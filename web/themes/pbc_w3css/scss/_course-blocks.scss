@@ -1,21 +1,11 @@
 /* Theming for course blocks on /available_courses */
 
 section#block-classesintroduction {
-  a:link {
-    text-decoration: underline;
-    color: blue;
-  }
-  a:visited {
-    text-decoration: underline;
-    color: purple;
-  }
-  a:active {
-    text-decoration: underline;
-    color: red;
-  }
+  a:link,
+  a:visited,
+  a:active,
   a:hover {
     text-decoration: underline;
-    color: darkgrey;
   }
 }
 

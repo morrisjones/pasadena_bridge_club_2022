@@ -10,7 +10,9 @@ $suit-red: #be1e2d;
 
 $brand-primary: $suit-red;
 $brand-blue-dark: #1e7ebe;
+$brand-blue: lighten($brand-blue-dark, 25%);
 $brand-blue-light: lighten($brand-blue-dark, 50%);
+$brand-green: #1ebe53;
 $brand-green-dark: darken( #1ebe5e, 20%);
 $brand-green-light: lighten($brand-green-dark, 65%);
 

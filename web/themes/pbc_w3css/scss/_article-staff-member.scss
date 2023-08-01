@@ -7,21 +7,12 @@ article.node--type-staff-member {
     float: left;
     max-width: 25%;
   }
-  a:link {
-    text-decoration: underline;
-    color: blue;
-  }
-  a:visited {
-    text-decoration: underline;
-    color: purple;
-  }
-  a:active {
-    text-decoration: underline;
-    color: red;
-  }
+  a,
+  a:link,
+  a:visited,
+  a:active,
   a:hover {
     text-decoration: underline;
-    color: darkgrey;
   }
 }
 
