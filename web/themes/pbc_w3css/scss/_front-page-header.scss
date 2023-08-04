@@ -20,6 +20,14 @@ div.header-inner {
   padding-left: 8px;
 }
 
+p.social-icons {
+  margin-left: 8px;
+  img {
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+}
+
 #header {
   background-color: white;
 }
@@ -28,11 +36,29 @@ div.header-inner {
   div.pbc-header {
     min-width: 400px;
   }
+  section#block-sociallinks-2 {
+    float: left;
+    width: 50%;
+  }
 }
 
 @media only screen and (max-width: 991px) {
   div.pbc-header {
     width: 50%;
+  }
+  section#block-sociallinks-2 {
+    float: left;
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  div.pbc-header {
+    width: 50%;
+  }
+  section#block-sociallinks-2 {
+    float: left;
+    width: 100%;
   }
 }
 
