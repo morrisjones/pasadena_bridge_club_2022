@@ -172,6 +172,13 @@ div.callout-container {
 .top-callout h1 {
   line-height: 1.1;
 }
+.top-callout a,
+.top-callout a:link,
+.top-callout a:visited,
+.top-callout a:hover,
+.top-callout a:active {
+  text-decoration: underline;
+}
 
 /* end of special header blocks */
 /* Theme the page title for /node pages */
