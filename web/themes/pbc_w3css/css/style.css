@@ -127,7 +127,7 @@ p.social-icons img {
   div.pbc-header {
     min-width: 400px;
   }
-  section#block-sociallinks-2 {
+  section#block-sociallinks {
     float: left;
     width: 50%;
   }
@@ -136,7 +136,7 @@ p.social-icons img {
   div.pbc-header {
     width: 50%;
   }
-  section#block-sociallinks-2 {
+  section#block-sociallinks {
     float: left;
     width: 50%;
   }
@@ -145,7 +145,7 @@ p.social-icons img {
   div.pbc-header {
     width: 50%;
   }
-  section#block-sociallinks-2 {
+  section#block-sociallinks {
     float: left;
     width: 100%;
   }
